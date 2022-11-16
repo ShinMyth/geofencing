@@ -17,15 +17,15 @@
 <body>
     <div id="map"></div>
     <div>
-        <input type="button" onclick="checkOfficePolygonContainsLocation(employeeLocation1, officePolygonPoints)"
+        <input type="button" onclick="initMap(employeeLocation1, officeLocation, officePolygonPoints)"
             value="Employee Location 1">
-        <input type="button" onclick="checkOfficePolygonContainsLocation(employeeLocation2, officePolygonPoints)"
+        <input type="button" onclick="initMap(employeeLocation2, officeLocation, officePolygonPoints)"
             value="Employee Location 2">
     </div>
 </body>
 
 <script>
-    document.body.onload = testInit(officeLocation, officePolygonPoints, employeeLocation1);
+    document.body.onload = initMap(employeeLocation1, officeLocation, officePolygonPoints);
 </script>
 
 </html>
