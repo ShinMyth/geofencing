@@ -1,0 +1,31 @@
+<html>
+
+<!-- Run script to use google maps api's and its libraries. -->
+<!-- And replace "YOUR_API_KEY" with key from google maps console. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry"></script>
+
+<!-- Run script to declare testing values. -->
+<script type="text/javascript" src="js/values.js"></script>
+
+<!-- Run script to declare testing function. -->
+<script type="text/javascript" src="js/geofence.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+
+
+<body>
+    <div id="map"></div>
+    <div>
+        <input type="button" onclick="checkOfficePolygonContainsLocation(employeeLocation1, officePolygonPoints)"
+            value="Employee Location 1">
+        <input type="button" onclick="checkOfficePolygonContainsLocation(employeeLocation2, officePolygonPoints)"
+            value="Employee Location 2">
+    </div>
+</body>
+
+<script>
+    document.body.onload = testInit(officeLocation, officePolygonPoints, employeeLocation1);
+</script>
+
+</html>
