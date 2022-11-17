@@ -1,31 +1,24 @@
-<html>
+<!-- Replace "YOUR_API_KEY" with generated key from google maps console. -->
 
-<!-- Run script to use google maps api's and its libraries. -->
-<!-- And replace "YOUR_API_KEY" with key from google maps console. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geofencing</title>
+</head>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry"></script>
+<script src="js/values.js"></script>
+<script src="js/geofence.js"></script>
 
-<!-- Run script to declare testing values. -->
-<script type="text/javascript" src="js/values.js"></script>
-
-<!-- Run script to declare testing function. -->
-<script type="text/javascript" src="js/geofence.js"></script>
-
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-
-
+<link rel="stylesheet" href="css/style.css">
 
 <body>
     <div id="map"></div>
-    <div>
-        <input type="button" onclick="initMap(employeeLocation1, officeLocation, officePolygonPoints)"
-            value="Employee Location 1">
-        <input type="button" onclick="initMap(employeeLocation2, officeLocation, officePolygonPoints)"
-            value="Employee Location 2">
-    </div>
 </body>
 
-<script>
-    document.body.onload = initMap(employeeLocation1, officeLocation, officePolygonPoints);
-</script>
+<script>document.body.onload = initMap(employeeLocationValue, officeLocationValue, officePolygonPointsValue);</script>
 
 </html>
