@@ -35,7 +35,7 @@ function updateMap(eventLatLng) {
     employeeLocation = eventLatLng;
 
     map.setCenter(employeeLocation);
-    
+
     generateMapMarkers();
     generateMapPolygon();
 }
@@ -62,7 +62,7 @@ function generateMapMarkers() {
         icon: "assets/images/office-marker.png",
         map: map,
     });
-    
+
     mapMarkers.push(officeMarker);
 }
 
