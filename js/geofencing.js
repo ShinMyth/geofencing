@@ -33,6 +33,9 @@ function generateMap() {
 
 function updateMap(eventLatLng) {
     employeeLocation = eventLatLng;
+
+    map.setCenter(employeeLocation);
+    
     generateMapMarkers();
     generateMapPolygon();
 }
@@ -71,9 +74,10 @@ function generateMapPolygon() {
     };
     mapPolygons = [];
 
+
     var officePolygon = new google.maps.Polygon({
         paths: officePolygonPoints,
-        fillColor: result ? "#00FF00" : "#000000" ,
+        fillColor: result ? "#00FF00" : "#000000",
         fillOpacity: result ? 0.275 : 0.35,
         strokeColor: result ? "#41495C" : "#F56F6C",
         strokeWeight: 1,
@@ -89,11 +93,9 @@ function generateMapPolygon() {
 
 
 function checkPolygonContainsLocation() {
-    var officePolygon = new google.maps.Polygon({ paths: officePolygonPoints });
-
     var containsLocation = google.maps.geometry.poly.containsLocation(
         employeeLocation,
-        officePolygon,
+        new google.maps.Polygon({ paths: officePolygonPoints }),
     );
 
     return containsLocation;
