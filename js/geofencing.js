@@ -11,6 +11,9 @@ function initMap(employeeLocationValue, officeLocationValue, officePolygonPoints
     officeLocation = officeLocationValue;
     officePolygonPoints = officePolygonPointsValue;
 
+    document.getElementById("employeeLat").value = employeeLocation.lat;
+    document.getElementById("employeeLng").value = employeeLocation.lng;
+
     generateMap();
     generateMapMarkers();
     generateMapPolygon();
@@ -27,12 +30,15 @@ function generateMap() {
     );
 
     map.addListener("click", function (event) {
-        updateMap(event.latLng);
+        updateMap(event.latLng.toJSON());
     });
 }
 
 function updateMap(eventLatLng) {
     employeeLocation = eventLatLng;
+
+    document.getElementById("employeeLat").value = employeeLocation.lat;
+    document.getElementById("employeeLng").value = employeeLocation.lng;
 
     map.setCenter(employeeLocation);
 
@@ -84,8 +90,8 @@ function generateMapPolygon() {
         map: map,
     });
 
-    officePolygon.addListener('click', function (event) {
-        updateMap(event.latLng);
+    officePolygon.addListener("click", function (event) {
+        updateMap(event.latLng.toJSON());
     });
 
     mapPolygons.push(officePolygon);
