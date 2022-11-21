@@ -62,18 +62,24 @@ function generateMapMarkers() {
 
     mapMarkers.push(employeeMarker);
 
-    var officeMarker = new google.maps.Marker({
-        position: officeLocation,
-        title: "Office",
-        icon: "assets/images/office-marker.png",
-        map: map,
-    });
+    // var officeMarker = new google.maps.Marker({
+    //     position: officeLocation,
+    //     title: "Office",
+    //     icon: "assets/images/office-marker.png",
+    //     map: map,
+    // });
 
-    mapMarkers.push(officeMarker);
+    // mapMarkers.push(officeMarker);
 }
 
-function generateMapPolygon() {
+async function generateMapPolygon() {
     var result = checkPolygonContainsLocation();
+
+    document.getElementById("checkJS").innerHTML = result;
+
+    var result2 = await checkPolygonContainsLocation2();
+
+    document.getElementById("checkPHP").innerHTML = result2;
 
     for (var i = 0; i < mapPolygons.length; i++) {
         mapPolygons[i].setMap(null);
@@ -83,9 +89,9 @@ function generateMapPolygon() {
 
     var officePolygon = new google.maps.Polygon({
         paths: officePolygonPoints,
-        fillColor: result ? "#00FF00" : "#000000",
-        fillOpacity: result ? 0.275 : 0.35,
-        strokeColor: result ? "#41495C" : "#F56F6C",
+        fillColor: result2 ? "#00FF00" : "#000000",
+        fillOpacity: result2 ? 0.275 : 0.35,
+        strokeColor: result2 ? "#41495C" : "#F56F6C",
         strokeWeight: 1,
         map: map,
     });
@@ -105,4 +111,20 @@ function checkPolygonContainsLocation() {
     );
 
     return containsLocation;
+}
+
+async function checkPolygonContainsLocation2() {
+    var containsLocation;
+
+    await jQuery.ajax({
+        type: "POST",
+        url: 'api/geofencing.php',
+        data: { employeeLat: String(employeeLocation.lat), employeeLng: String(employeeLocation.lng) },
+        success: function (response) {
+            if (response == "true") { containsLocation = true } else { containsLocation = false }
+        }
+    });
+
+    return containsLocation;
+
 }

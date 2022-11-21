@@ -9,6 +9,9 @@ class Point {
     }
 }
 
+$employeeLat = $_POST["employeeLat"];
+$employeeLng = $_POST["employeeLng"];
+
 //the Point in Polygon function
 function pointInPolygon($p, $polygon) {
     //if you operates with (hundred)thousands of points
@@ -49,8 +52,11 @@ $polygon = array(
 function test($lat, $long) {
     global $polygon;
     $ll=$lat.', '.$long;
-    echo (pointInPolygon(new Point($lat,$long), $polygon)) ? $ll .' is inside polygon<br>' : $ll.' is outside<br>';
+    // echo (pointInPolygon(new Point($lat,$long), $polygon)) ? $ll .' is inside polygon<br>' : $ll.' is outside<br>';
+    echo pointInPolygon(new Point($lat,$long), $polygon) ? "true" : "false";
 }
 
-test(8.494248946505653, 124.65202668111144);
-test(8.494599601911714, 124.65175666051282);
+
+test($employeeLat, $employeeLng);
+// test(8.494248946505653, 124.65202668111144);
+// test(8.494599601911714, 124.65175666051282);
