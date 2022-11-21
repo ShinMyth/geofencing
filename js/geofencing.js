@@ -1,16 +1,20 @@
+var employeeLocation = { lat: 8.494248946505653, lng: 124.65202668111144 };
+var officeLocation = { lat: 8.494599601911714, lng: 124.65175666051282 };
+var officePolygonPoints = [
+    { lat: 8.494447689033173, lng: 124.65176473964237 },
+    { lat: 8.49468975564717, lng: 124.65185459364372 },
+    { lat: 8.494777297507396, lng: 124.65161520650037 },
+    { lat: 8.49471164111411, lng: 124.65159173717258 },
+    { lat: 8.494664554198868, lng: 124.65171981264706 },
+    { lat: 8.494488807209033, lng: 124.65165611018516 },
+    { lat: 8.494447689033173, lng: 124.65176473964237 },
+];
+
 var map;
 var mapMarkers = [];
 var mapPolygons = [];
 
-var employeeLocation;
-var officeLocation;
-var officePolygonPoints;
-
-function initMap(employeeLocationValue, officeLocationValue, officePolygonPointsValue) {
-    employeeLocation = employeeLocationValue;
-    officeLocation = officeLocationValue;
-    officePolygonPoints = officePolygonPointsValue;
-
+function initMap() {
     document.getElementById("employeeLat").value = employeeLocation.lat;
     document.getElementById("employeeLng").value = employeeLocation.lng;
 
@@ -61,25 +65,16 @@ function generateMapMarkers() {
     });
 
     mapMarkers.push(employeeMarker);
-
-    // var officeMarker = new google.maps.Marker({
-    //     position: officeLocation,
-    //     title: "Office",
-    //     icon: "assets/images/office-marker.png",
-    //     map: map,
-    // });
-
-    // mapMarkers.push(officeMarker);
 }
 
 async function generateMapPolygon() {
-    var result = checkPolygonContainsLocation();
+    var checkJSResult = checkPolygonContainsLocationJS();
 
-    document.getElementById("checkJS").innerHTML = result;
+    document.getElementById("checkJS").innerHTML = checkJSResult;
 
-    var result2 = await checkPolygonContainsLocation2();
+    var checkPHPResult = await checkPolygonContainsLocationPHP();
 
-    document.getElementById("checkPHP").innerHTML = result2;
+    document.getElementById("checkPHP").innerHTML = checkPHPResult;
 
     for (var i = 0; i < mapPolygons.length; i++) {
         mapPolygons[i].setMap(null);
@@ -89,9 +84,9 @@ async function generateMapPolygon() {
 
     var officePolygon = new google.maps.Polygon({
         paths: officePolygonPoints,
-        fillColor: result2 ? "#00FF00" : "#000000",
-        fillOpacity: result2 ? 0.275 : 0.35,
-        strokeColor: result2 ? "#41495C" : "#F56F6C",
+        fillColor: checkPHPResult ? "#00FF00" : "#000000",
+        fillOpacity: checkPHPResult ? 0.275 : 0.35,
+        strokeColor: checkPHPResult ? "#41495C" : "#F56F6C",
         strokeWeight: 1,
         map: map,
     });
@@ -104,7 +99,7 @@ async function generateMapPolygon() {
 }
 
 
-function checkPolygonContainsLocation() {
+function checkPolygonContainsLocationJS() {
     var containsLocation = google.maps.geometry.poly.containsLocation(
         employeeLocation,
         new google.maps.Polygon({ paths: officePolygonPoints }),
@@ -113,7 +108,7 @@ function checkPolygonContainsLocation() {
     return containsLocation;
 }
 
-async function checkPolygonContainsLocation2() {
+async function checkPolygonContainsLocationPHP() {
     var containsLocation;
 
     await jQuery.ajax({
@@ -121,10 +116,13 @@ async function checkPolygonContainsLocation2() {
         url: 'api/geofencing.php',
         data: { employeeLat: String(employeeLocation.lat), employeeLng: String(employeeLocation.lng) },
         success: function (response) {
-            if (response == "true") { containsLocation = true } else { containsLocation = false }
+            if (response == "true") {
+                containsLocation = true;
+            } else {
+                containsLocation = false;
+            }
         }
     });
 
     return containsLocation;
-
 }
