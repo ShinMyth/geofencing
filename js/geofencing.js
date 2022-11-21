@@ -114,13 +114,13 @@ async function checkPolygonContainsLocationPHP() {
     await jQuery.ajax({
         type: "POST",
         url: 'api/geofencing.php',
-        data: { employeeLat: String(employeeLocation.lat), employeeLng: String(employeeLocation.lng) },
+        data: {
+            employeeLat: String(employeeLocation.lat),
+            employeeLng: String(employeeLocation.lng),
+            officePolygonPoints: JSON.stringify(officePolygonPoints),
+        },
         success: function (response) {
-            if (response == "true") {
-                containsLocation = true;
-            } else {
-                containsLocation = false;
-            }
+            containsLocation = JSON.parse(response);
         }
     });
 

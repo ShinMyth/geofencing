@@ -33,15 +33,13 @@ function containsLocation($p, $polygon) {
 
 $employeeLat = $_POST["employeeLat"];
 $employeeLng = $_POST["employeeLng"];
+$officePolygonPoints = json_decode($_POST["officePolygonPoints"]);
 
-$polygon = array(
-    new Location(8.494447689033173, 124.6517647396423),
-    new Location(8.49468975564717, 124.65185459364372), 
-    new Location(8.494777297507396, 124.65161520650037), 
-    new Location(8.49471164111411, 124.65159173717258),
-    new Location(8.494664554198868, 124.65171981264706),
-    new Location(8.494488807209033, 124.65165611018516),
-    new Location(8.494447689033173, 124.6517647396423),
-);
+$polygon = array();
 
-echo containsLocation(new Location($employeeLat, $employeeLng), $polygon) ? "true" : "false";
+foreach ($officePolygonPoints as $value) {
+    $array = json_decode(json_encode($value), true);
+    array_push($polygon, new Location($array["lat"], $array["lng"]));
+}
+
+echo json_encode(containsLocation(new Location($employeeLat, $employeeLng), $polygon) ? true : false);
