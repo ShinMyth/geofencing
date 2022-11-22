@@ -1,0 +1,39 @@
+<!-- Replace "YOUR_API_KEY" with generated key from google maps console. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geofencing</title>
+</head>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="js/geofencing.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+
+<body>
+    <div class="Row">
+        <div class="Column" id="map"></div>
+        <div class="Column" id="map-details">
+            <label for="employeeLat">Employee Latitude</label>
+            <input type="text" id="employeeLat">
+            <br><br>
+            <label for="employeeLng">Employee Longitude</label>
+            <input type="text" id="employeeLng">
+            <br><br><br>
+            <p>CheckPolygonContainsLocation(JS): <span id="checkJS"></span></p>
+            <p>CheckPolygonContainsLocation(PHP): <span id="checkPHP"></span></p>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.body.onload = initMap();
+</script>
+
+</html>
